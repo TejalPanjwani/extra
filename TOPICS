@@ -1,0 +1,76 @@
+
+to_s and to_str are very different.
+to_s is defined on most objects and returns a string representation of this object.
+Defining to_str on an object is very much like saying “this object behaves like a string”.
+Calling to_str should return a string-like object, not juste a representation of the object as a string.
+
+
+lambda:
+Lambdas in Ruby are also objects, just like everything else!
+anonymous function
+The last expression of a lambda is its return value, just like regular functions. 
+1st method: variable = -> (arg){ body }
+2nd method: variable = lambda { } # your lambda between the braces
+
+
+Map:
+Applying map on an array returns a new array 
+where each element is the result of evaluating the block with the element as an argument.
+Always return array
+
+Map over a Hash
+There’s a new method (since Ruby 2.4) called Hash#transform_values 
+that you could use pretty much like you would use an Array.
+
+h = { a: 1, b: 2, c: 3 }
+h.transform_values {|v| v * v + 1 }
+# => { a: 2, b: 5, c: 10 }
+
+h.transform_values(&:to_s)
+# => { a: "1", b: "2", c: "3" }
+
+
+CURRYING:
+It's a way to let you create new functions from existing functions.
+In the code below I have a lambda function that adds two numbers. 
+Conveniently, it's called add. 
+Then I use currying to create a more specialized function called increment. 
+It simply adds one to any given number.
+add = lambda {|a,b| a+b }
+add.call(1,3)=>4
+increament = add.curry.call(3)
+increament.call(100)=>103
+
+You can curry any proc in Ruby You can curry any proc in Ruby
+
+
+SELECT
+select does is it returns all the objects for which the block returns a truthy value (i.e. not nil or false).
+print a=(0..5).select{ |n| n>3}
+
+
+COLLECT
+returns the entire collection, regardless of whether it is an array or a hash.
+print array.collect
+use the collect method when you want to do something with each of the values to get the new array
+b = a.collect{|x| 10*x}
+
+CLONE
+The collect method is not the right way to do copying between arrays. 
+There is another method called a clone, which should be used to copy one array into another array.
+
+FILE
+File.open method can be associated with a block,
+whereas you cannot do the same using the File.new method.
+gets reads a line from standard input, 
+and aFile.gets reads a line from the file object aFile.
+sysread to read the contents of a file. You can open the file in any of the modes when using the method sysread
+syswrite to write the contents into a file. You need to open the file in write mode when using the method syswrite.
+each_byte is always associated with a block.
+
+IO class methods is IO.readlines. This method returns the contents of the file line by line.
+arr = IO.readlines("input.txt")
+The difference between the method foreach and the method readlines is that the method foreach is associated with a block. 
+the method foreach does not return an array. For example :
+IO.foreach("input.txt"){|block| puts block}
+file test line by line to the variable block, and then the output will be displayed on the screen.
